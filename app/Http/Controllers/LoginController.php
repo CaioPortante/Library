@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
+    public function showLogin()
+    {
+        return view('login');
+    }
+
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -26,7 +31,13 @@ class LoginController extends Controller
                 'user_type' => $user->type
             ]);
 
-            return redirect()->intended('dashboard');
+            $isUserAdmin = $user->type === 1;
+
+            if($isUserAdmin){
+                return redirect()->intended('admin');
+            } else{
+                return redirect()->intended('/');
+            }
         }
  
         return back()->withErrors([
