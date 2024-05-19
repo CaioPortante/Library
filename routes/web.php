@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -13,6 +14,12 @@ Route::get('/register', [UserController::class, "showRegister"]);
 Route::post('/register', [UserController::class, "createUser"])->name("register");
 
 Route::prefix("/")->middleware("auth")->group(function () {
+
     Route::get('/', [DashboardController::class, "showDashboard"]);
-    Route::get('/admin', [DashboardController::class, "showAdminDashboard"])->name("admin");
+
+    Route::prefix("/admin")->name("admin")->group(function () {
+        Route::get('/', [DashboardController::class, "showAdminDashboard"]);
+
+        Route::get('/books', [BookController::class, "showBooksDashboard"])->name(".books");
+    });
 });

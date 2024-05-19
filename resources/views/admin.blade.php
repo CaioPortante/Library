@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin</title>
+@extends('layouts.app')
 
-    <link href="./public/css/app.css" rel="stylesheet">
+@section('title', 'Admin Dashboard')
+@section('pageTitle', 'Bem-vindo ao Admin')
 
-</head>
-<body>
-    <h1>Bem-vindo ao Admin</h1>
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+@section('content')
+    <div>
+        <a href="{{ route("admin.books") }}">Gerenciar Livros</a>
+    </div>
+@endsection

@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
+@extends('layouts.app')
 
-    <link href="./public/css/app.css" rel="stylesheet">
+@section('title', 'Register')
+@section('pageTitle', 'Cadastrar novo usuário')
 
-</head>
-<body>
-    <h1>Criar Usuário</h1>
+@section('content')
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <input type="text" name="name">
@@ -20,5 +16,4 @@
         </select>
         <input type="submit" value="Salvar">
     </form>
-</body>
-</html>
+@endsection
