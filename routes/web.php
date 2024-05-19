@@ -21,5 +21,6 @@ Route::prefix("/")->middleware("auth")->group(function () {
         Route::get('/', [DashboardController::class, "showAdminDashboard"]);
 
         Route::get('/books', [BookController::class, "showBooksDashboard"])->name(".books");
+        Route::get('/books/edit/{id}', [BookController::class, "editBookDashboard"])->name(".books.edit");
     });
 });

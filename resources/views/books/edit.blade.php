@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Admin Books')
-@section('pageTitle', 'Controle de Livros')
+@section('pageTitle', 'Editar livro: '.$book->title)
 
 @section('content')
-    <table>
-        
-    </table>
+    <h1>teste</h1>
 @endsection
