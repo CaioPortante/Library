@@ -28,6 +28,8 @@
                             <input type="password" name="password" class="text-black">
                             <input type="submit" value="Logar">
                         </form>
+
+                        <a href="{{ route("register") }}">Criar Usuário</a>
                     </main>
 
                     @if($errors->any())

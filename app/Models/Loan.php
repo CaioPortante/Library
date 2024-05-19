@@ -9,6 +9,8 @@ class Loan extends Model
 {
     use HasFactory;
 
+    protected $table = 'loans';
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user');

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>Admin</title>
+
+    <link href="./public/css/app.css" rel="stylesheet">
+
 </head>
 <body>
     <h1>Bem-vindo ao Admin</h1>

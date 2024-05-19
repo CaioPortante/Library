@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
-    function showDashboard() 
+    public function showDashboard() 
     {
         return view('dashboard');
     }
 
-    function showAdminDashboard() 
+    public function showAdminDashboard() 
     {
         return view('admin');
     }

@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable
 
     public function UsersType()
     {
-        return $this->belongsTo(UsersType::class, 'type');
+        return $this->belongsTo(UserType::class, 'type');
     }
 
     public function loans()

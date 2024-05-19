@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Dashboard</title>
+    
+    <link href="./public/css/app.css" rel="stylesheet">
+
 </head>
 <body>
     <h1>Bem-vindo ao Dashboard</h1>
