@@ -22,5 +22,6 @@ Route::prefix("/")->middleware("auth")->group(function () {
 
         Route::get('/books', [BookController::class, "showBooksDashboard"])->name(".books");
         Route::get('/books/edit/{id}', [BookController::class, "editBookDashboard"])->name(".books.edit");
+        Route::post('/books/edit/save/{id}', [BookController::class, "editBookSave"])->name(".books.edit.save");
     });
 });
