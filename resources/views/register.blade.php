@@ -6,14 +6,31 @@
 @section('content')
     <form method="POST" action="{{ route('register') }}">
         @csrf
-        <input type="text" name="name">
-        <input type="email" name="email">
-        <input type="password" name="password">
-        <select name="type">
-            @foreach ($userTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->description }}</option>                
-            @endforeach
-        </select>
-        <input type="submit" value="Salvar">
+        <div class="flex flex-col">
+
+            <div class="flex flex-row">
+                <span for="name" class="">Nome:</span>
+                <input type="text" name="name" class="border rounded">
+            </div>
+            <div class="flex flex-row">
+                <span for="email" class="">Email:</span>
+                <input type="email" name="email" class="border rounded">
+            </div>
+            <div class="flex flex-row">
+                <span for="password" class="">Senha:</span>
+                <input type="password" name="password" class="border rounded">
+            </div>
+            <div class="flex flex-row">
+                <span for="type" class="">Nivel de Acesso:</span>
+                <select name="type" class="border rounded">
+                    @foreach ($userTypes as $type)
+                        <option value="{{ $type->id }}">{{ $type->description }}</option>                
+                    @endforeach
+                </select>
+            </div>
+
+            <input type="submit" value="Salvar">
+
+        </div>
     </form>
 @endsection

@@ -28,7 +28,8 @@ class LoginController extends Controller
 
             session([
                 'user_id' => Auth::id(),
-                'user_type' => $user->type
+                'user_type' => $user->type,
+                'user_name' => $user->name,
             ]);
 
             $isUserAdmin = $user->type === 1;

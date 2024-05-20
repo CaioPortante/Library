@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
-<body>
+<body class="bg-gray-100">
 
-    @include('partials.header')
-
-    <h1>@yield('pageTitle', 'Biblioteca Online')</h1>
+    <div class="min-h-screen flex flex-col">
+        
+        @include('partials.header')
+        
+        <div class="w-100 flex-grow">
+            @yield('content')
+        </div>
     
-    <div class="container">
-        @yield('content')
-    </div>
+        @include('partials.footer')
 
-    @include('partials.footer')
+    </div>
 
     <script src="./resources/js/app.js"></script>
 
