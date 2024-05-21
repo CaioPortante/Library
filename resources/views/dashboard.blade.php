@@ -4,18 +4,26 @@
 
 @section('content')
 
-    <div class="grid grid-cols-2 justify-around w-100">
-        <a href="" class="w-100 flex">
-            <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 w-1/2 mx-auto">
-                Minhas Reservas
-            </button>
-        </a>
+    <div class="flex flex-col justify-around w-100">
+        <div class="flex ml-auto mr-4 mb-4">
+            <a href="{{ route("books.list") }}" class="w-100">
+                <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
+                    Fazer uma Reserva
+                </button>
+            </a>
+        </div>
 
-        <a href="" class="w-100 flex">
-            <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 w-1/2 mx-auto">
-                Ver Livros
-            </button>
-        </a>
+        <div class="w-100">
+            @if(count($loans) === 0)
+                <div class="w-100 text-center italic">
+                    Nenhum livro alugado... Ainda!
+                </div>
+            @else
+                @foreach ($loans as $loan)
+                    teste
+                @endforeach
+            @endif
+        </div>
         
     </div>
     

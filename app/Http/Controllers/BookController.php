@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Loan;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -48,5 +49,23 @@ class BookController extends Controller
             return redirect()->back()->with("response", [400, "Erro ao salvar os Dados!"]);
         }
     
+    }
+
+    public function showBooksToLoan()
+    {
+
+        $books = Book::all();
+
+        foreach ($books as $book) {
+            $activeLoans = Loan::with('book')->where('book', $book->id)->where('status', 1);
+
+            foreach ($activeLoans as $key => $value) {
+                $book->quantity--;
+            }
+            
+        }
+
+        return view("books.list", compact('books'));
+
     }
 }
