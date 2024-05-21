@@ -6,6 +6,13 @@
 @section('content')
     <div class="flex w-100 justify-center">
         <div class="relative overflow-x-auto">
+            <div class="w-100 flex justify-end px-4 mb-4">
+                <a href="{{ route('admin.books.add') }}">
+                    <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
+                        Adicionar novo Livro
+                    </button>
+                </a>
+            </div>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -13,7 +20,7 @@
                             Título
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Autor
+                            Autor(a)
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             Descrição
@@ -47,12 +54,18 @@
                             <td class="px-6 py-4 text-center">
                                 {{ $book->quantity }}
                             </td>
-                            <td class="px-6 py-4 text-center">
+                            <td class="px-6 py-4 text-center gap-2 flex flex-row">
                                 <a href="{{ route("admin.books.edit", ["id"=>$book->id]) }}">
                                     <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
                                         Editar
                                     </button>
                                 </a>
+                                <form method="POST" action="{{ route('admin.books.delete', ['id'=>$book->id]) }}">
+                                    @csrf
+                                    <button class="py-2 px-4 border rounded-lg text-white bg-red-600 mx-auto">
+                                        Excluir
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

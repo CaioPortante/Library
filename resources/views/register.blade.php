@@ -38,7 +38,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Acessar</button>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Criar Usuário</button>
                     </form>
                     
                     <div class="max-w-md mx-auto mt-2 flex flex-row justify-between px-8">
