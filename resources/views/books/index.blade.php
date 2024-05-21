@@ -4,32 +4,79 @@
 @section('pageTitle', 'Controle de Livros')
 
 @section('content')
-    <table class="border border-black">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Descrição</th>
-                <th>ISBN</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($books as $book)
-                <tr>
-                    <td>{{ $book->title }}</td>
-                    <td>{{ $book->author }}</td>
-                    <td>{{ $book->description }}</td>
-                    <td>{{ $book->isbn }}</td>
-                    <td>{{ $book->quantity }}</td>
-                    <td>
-                        <a href="{{ route("admin.books.edit", ["id"=>$book->id]) }}">
-                            Editar
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="flex w-100 justify-center">
+        <div class="relative overflow-x-auto">
+            <div class="w-100 flex justify-between px-4 mb-4">
+                <a href={{ route('dashboard') }}>
+                    <button type="button" class="text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+                        Voltar
+                    </button>
+                </a>
+                <a href="{{ route('admin.books.add') }}">
+                    <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
+                        Adicionar novo Livro
+                    </button>
+                </a>
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Título
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Autor(a)
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Descrição
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            ISBN
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Quantidade
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($books as $book)
+                        <tr class="bg-white border-b">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {{ $book->title }}
+                            </th>
+                            <td class="px-6 py-4 italic">
+                                {{ $book->author }}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{ $book->description }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $book->isbn }}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                {{ $book->quantity }}
+                            </td>
+                            <td class="px-6 py-4 text-center gap-2 flex flex-row">
+                                <a href="{{ route("admin.books.edit", ["id"=>$book->id]) }}">
+                                    <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
+                                        Editar
+                                    </button>
+                                </a>
+                                <form method="POST" action="{{ route('admin.books.delete', ['id'=>$book->id]) }}">
+                                    @csrf
+                                    <button type="submit" class="py-2 px-4 border rounded-lg text-white bg-red-600 mx-auto">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 @endsection

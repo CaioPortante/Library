@@ -17,6 +17,45 @@ class BookController extends Controller
     
     }
 
+    public function addBookDashboard()
+    {
+        return view("books.add");
+    }
+
+    public function addBookSave(Request $request)
+    {
+        $validatedRequest = $request->validate(
+            [
+                'title'=>'required',
+                'author'=>'required',
+                'isbn'=>'required',
+                'description'=>'required',
+                'quantity'=>'required|integer|gt:0',
+            ], 
+            [
+                'title.required'=>'É preciso passar um Título.',
+                'author.required'=>'É preciso passar o Autor.',
+                'isbn.required'=>'É preciso passar o ISBN.',
+                'description.required'=>'É preciso dar uma descrição.',
+                'quantity.required'=>'É preciso passar a quantidade.',
+                'quantity.integer'=>'Quantidade precisa ser numérica',
+                'quantity.gt:0'=>'Quantidade precisa ser maior que 0',
+            ], 
+        );
+
+        $book = new Book();
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->isbn = $request->isbn;
+        $book->description = $request->description;
+        $book->quantity = $request->quantity;
+
+        $book->save();
+
+        return redirect('/admin/books')->with("response", [200, "Livro cadastrado com Sucesso!"]);
+    }
+
     public function editBookDashboard($id)
     {
 
@@ -29,25 +68,55 @@ class BookController extends Controller
     public function editBookSave($id, Request $request)
     {
 
+        $validatedRequest = $request->validate(
+            [
+                'title'=>'required',
+                'author'=>'required',
+                'isbn'=>'required',
+                'description'=>'required',
+                'quantity'=>'required|integer|gt:0',
+            ], 
+            [
+                'title.required'=>'É preciso passar um Título.',
+                'author.required'=>'É preciso passar o Autor.',
+                'isbn.required'=>'É preciso passar o ISBN.',
+                'description.required'=>'É preciso dar uma descrição.',
+                'quantity.required'=>'É preciso passar a quantidade.',
+                'quantity.integer'=>'Quantidade precisa ser numérica',
+                'quantity.gt:0'=>'Quantidade precisa ser maior que 0',
+            ], 
+        );
+
         $book = Book::find($id);
 
-        if($book){
+        
+        if(!$book){
+
+            return redirect('/admin/books')->with("response", [404, "Produto não Encontrado!"]);
+
+        } else{
+
+            $activeLoans = Loan::with('book')->where('book_id', $id)->where('status', 1)->count();
+
+            if($request->quantity < $activeLoans){
+                return redirect('/admin/books/edit/'.$id)->with("response", [401, "A quantidade de não pode ser menor do que os Aluguéis ativos"]);
+            }
+
             $book->title = (string) $request->title;
             $book->author = (string) $request->author;
             $book->isbn = (string) $request->isbn;
             $book->description = (string) $request->description;
             $book->quantity = (int) $request->quantity;
-        } else{
-            return redirect()->back()->with("response", [400, "Produto não Encontrado!"]);
+
+            $updated = $book->save();
+    
+            if($updated){
+                return redirect('/admin/books')->with("response", [200, "Dados alterados com Sucesso!"]);
+            } 
+
         }
 
-        $updated = $book->save();
-
-        if($updated){
-            return redirect()->back()->with("response", [200, "Dados do produto alterado com Sucesso!"]);
-        } else{
-            return redirect()->back()->with("response", [400, "Erro ao salvar os Dados!"]);
-        }
+        return redirect('/admin/books/edit/'.$id)->with("response", [400, "Erro ao salvar os Dados!"]);
     
     }
 
@@ -57,15 +126,38 @@ class BookController extends Controller
         $books = Book::all();
 
         foreach ($books as $book) {
-            $activeLoans = Loan::with('book')->where('book', $book->id)->where('status', 1);
 
-            foreach ($activeLoans as $key => $value) {
-                $book->quantity--;
+            $isBookLoanedByUser = Loan::with(['book', 'user'])->where('book_id', $book->id)->where('user_id', session('user_id'))->where('status', 1)->count();
+
+            if($isBookLoanedByUser > 0){
+
+                $book->quantity = 0;
+
+            } else{
+
+                $activeLoans = Loan::with('book')->where('book_id', $book->id)->where('status', 1)->count();
+    
+                $book->quantity = $book->quantity - $activeLoans;
+
             }
-            
+
         }
 
         return view("books.list", compact('books'));
 
+    }
+
+    public function deleteBook($id)
+    {
+        $activeLoans = Loan::with('book')->where('book_id', $id)->where('status', 1)->count();
+
+        if($activeLoans > 0){
+            return redirect()->back()->with('response', [400, 'Esse livro tem aluguéis ativos!']);
+        }
+
+        $book = Book::find($id);
+        $book->delete();
+
+        return redirect()->back()->with('response', [200, 'Livro deletado com sucesso!']);
     }
 }

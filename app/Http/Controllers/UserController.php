@@ -17,14 +17,25 @@ class UserController extends Controller
 
     public function createUser(Request $request) {
 
-        $isRequestValid = $request->validate([
-            "name"=>"required",
-            "email"=>"required|email",
-            "password"=>"required",
-            "type"=>"required"
-        ]);
+        $isRequestValid = $request->validate(
+            [
+                "name"=>"required",
+                "email"=>"required|email",
+                "password"=>"required",
+                "type"=>"required"
+            ],
+            [
+                "name.required"=>"Insira o Nome",
+                "email.required"=>"Insira um Email",
+                "email.email"=>"Email Inválido",
+                "password.required"=>"Insira uma Senha",
+                "type.required"=>"Selecione um Tipo"
+            ]
+        );
 
-        if($isRequestValid){
+        $isEmailRegistered = User::where('email', $request->email)->count();
+
+        if($isRequestValid && $isEmailRegistered === 0){
 
             $user = User::create([
                 "name"=>$request->name,
@@ -35,11 +46,11 @@ class UserController extends Controller
     
             $user->save();
 
-            return redirect()->intended("/login");
+            return redirect("/login")->with("response", [200, "Cadastro Realizado"]);
             
         }
         
-        return view("register")->with("status", "Dados inválidos");
+        return redirect("/register")->back()->with("response", [400, "Ocorreu um erro"]);
         
     }
 }
