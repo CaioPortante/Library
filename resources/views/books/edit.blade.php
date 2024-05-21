@@ -20,6 +20,8 @@
         </div>
 
     </form>
+
+    
     @if(session("response"))
         {{ session("response")[1] }}
     @endif

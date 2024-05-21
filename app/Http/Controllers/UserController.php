@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function showRegister() {
+    public function showRegister($errors = []) {
 
         $userTypes = UserType::all();
 
-        return view('register', compact("userTypes"));
+        return view('register', compact("userTypes"))->with("errors", $errors);
     }
 
     public function createUser(Request $request) {
@@ -24,7 +24,9 @@ class UserController extends Controller
             "type"=>"required"
         ]);
 
-        if($isRequestValid){
+        $isEmailRegistered = User::where('email', $request->email)->count();
+
+        if($isRequestValid && $isEmailRegistered === 0){
 
             $user = User::create([
                 "name"=>$request->name,
@@ -35,11 +37,11 @@ class UserController extends Controller
     
             $user->save();
 
-            return redirect()->intended("/login");
+            return redirect("/login")->with("errors", [200, "Cadastro Realizado"]);
             
         }
         
-        return view("register")->with("status", "Dados inválidos");
+        return $this->showRegister([400, "Ocorreu um erro"]);
         
     }
 }

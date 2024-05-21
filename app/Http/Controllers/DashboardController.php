@@ -15,9 +15,4 @@ class DashboardController extends Controller
         return view('dashboard', compact("loans"));
     }
 
-    public function showAdminDashboard() 
-    {
-        return view('admin');
-    }
-
 }

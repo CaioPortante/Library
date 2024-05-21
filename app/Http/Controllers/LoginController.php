@@ -31,14 +31,9 @@ class LoginController extends Controller
                 'user_type' => $user->type,
                 'user_name' => $user->name,
             ]);
-
-            $isUserAdmin = $user->type === 1;
-
-            if($isUserAdmin){
-                return redirect()->intended('admin');
-            } else{
-                return redirect()->intended('/');
-            }
+            
+            return redirect("/");
+            
         }
  
         return back()->withErrors([
@@ -49,7 +44,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/login');
     }
 
 }
