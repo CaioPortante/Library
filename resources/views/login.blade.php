@@ -33,9 +33,41 @@
                         <span class="">Não tem acesso?</span>
                         <a href="{{ route("register") }}" class="underline text-blue-400">Criar Usuário</a>
                     </div>
-                   
+                    
                 </div>
+                @if (!empty(session('response')))
+                    @if (session('response')[0] === 200)
+                        <div class="absolute bottom-32 right-5 bg-green-100 border-l-4 border-green-500 text-green-700 px-6 py-4" role="alert" id="error" hidden>
+                            <p class="text-lg">
+                                {{ session('response')[1] }}
+                            </p>
+                        </div>
+                    @else
+                        <div class="absolute bottom-32 right-16 bg-red-100 border-l-4 border-red-500 text-red-700 px-6 py-4" role="alert" id="error" hidden>
+                            <p class="text-lg">
+                                {{ session('response')[1] }}
+                            </p>
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
+
     </body>
+
+    @if (!empty(session('response')))
+    
+        <script>
+            
+            const errorDiv = document.getElementById("error");
+            errorDiv.hidden = false;
+
+            setTimeout(() => {
+                errorDiv.hidden = true;
+            }, 3500);
+
+        </script>
+
+    @endif
+    
 </html>

@@ -16,10 +16,17 @@ class LoginController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Digite um Email',
+                'email.email' => 'Email Inválido',
+                'password.required' => 'Digite a Senha',
+            ]
+        );
  
         if (Auth::attempt($credentials, true)) {
             $request->session()->regenerate();
@@ -36,9 +43,7 @@ class LoginController extends Controller
             
         }
  
-        return back()->withErrors([
-            'email' => 'Credenciais inválidas.',
-        ])->onlyInput('email');
+        return back()->with('response', [400, 'Credenciais inválidas.']);
     }
 
     public function logout()

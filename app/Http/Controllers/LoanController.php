@@ -18,9 +18,16 @@ class LoanController extends Controller
     public function loanBook($id, Request $request)
     {
         
-        $validatedRequest = $request->validate([
-            "time"=>"required|integer|gt:0"
-        ]);
+        $validatedRequest = $request->validate(
+            [
+                "time"=>"required|integer|gt:0"
+            ],
+            [
+                "time.required"=>"É preciso inserir a quantidade de dias",
+                "time.integer"=>"A quantidade de dias precisa ser um número",
+                "time.gt:0"=>"A quantidade de dias precisa ser maior que 0",
+            ],
+        );
 
         $book = Book::find($id);
 
@@ -28,14 +35,14 @@ class LoanController extends Controller
         $areAllBooksLoaned = $book->quantity === $activeLoans;
 
         if($areAllBooksLoaned){
-            return redirect()->back()->with('status', [400, 'Todos os livros estão alugados']);
+            return redirect('/books/list')->with('response', [400, 'Todos os livros estão alugados']);
         }
 
         $bookLoanedByUser = Loan::with(['book', 'user'])->where('book_id', $id)->where('user_id', session('user_id'))->where('status', 1)->count();
         $isBookLoanedByUser = $bookLoanedByUser > 0;
 
         if($isBookLoanedByUser){
-            return redirect()->back()->with('status', [400, 'Você já alugou este livro, devolva antes de Alugá-lo novamente']);
+            return redirect('/books/list')->with('response', [400, 'Você já alugou este livro, devolva antes de Alugá-lo novamente']);
         }
 
         $loan = new Loan();
@@ -49,10 +56,10 @@ class LoanController extends Controller
         $isLoanSaved = $loan->save();
 
         if(!$isLoanSaved){
-            return redirect()->back()->with('status', [400, 'Ocorreu um erro ao realizar o Aluguel']);
+            return redirect('/books/list')->with('response', [400, 'Ocorreu um erro ao realizar o Aluguel']);
         }
         
-        return redirect()->intended('/')->with('status', [200, 'Aluguel realizado com Sucesso']);
+        return redirect('/dashboard')->with('response', [200, 'Aluguel realizado com Sucesso']);
         
     }
 
@@ -65,9 +72,9 @@ class LoanController extends Controller
         $isLoanSaved = $loan->save();
 
         if(!$isLoanSaved){
-            return redirect()->back()->with('status', [400, 'Ocorreu um erro ao devolver o livro']);
+            return redirect('/dashboard')->with('response', [400, 'Ocorreu um erro ao devolver o livro']);
         }
 
-        return redirect()->back()->with('status', [200, 'Livro devolvido!']);
+        return redirect('/dashboard')->with('response', [200, 'Livro devolvido!']);
     }
 }

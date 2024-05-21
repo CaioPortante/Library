@@ -25,12 +25,7 @@
                 </div>
             </form>
         </div>
-
         
     </div>
-    
-    @if (!empty(session('status')))
-        Erro: {{ session('status')[1] }}
-    @endif
 
 @endsection

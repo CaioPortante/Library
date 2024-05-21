@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         
     </head>
-    <body class="font-sans antialiased  bg-gray-900">
+    <body class="font-sans antialiased  bg-gray-900 relative">
         <div class="bg-gray-50 text-white/75 bg-gray-900">
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
@@ -49,5 +49,37 @@
                 </div>
             </div>
         </div>
+
+        @if (!empty(session('response')))
+            @if (session('response')[0])
+                <div class="absolute bottom-32 right-5 bg-green-100 border-l-4 border-green-500 text-green-700 px-6 py-4" role="alert" id="error" hidden>
+                    <p class="text-lg">
+                        {{ session('response')[1] }}
+                    </p>
+                </div>
+            @else
+                <div class="absolute bottom-32 right-5 bg-red-100 border-l-4 border-red-500 text-red-700 px-6 py-4" role="alert" id="error" hidden>
+                    <p class="text-lg">
+                        {{ session('response')[1] }}
+                    </p>
+                </div>
+            @endif
+        @endif
     </body>
+
+    @if (!empty(session('response')))
+    
+        <script>
+            
+            const errorDiv = document.getElementById("error");
+            errorDiv.hidden = false;
+
+            setTimeout(() => {
+                errorDiv.hidden = true;
+            }, 3500);
+
+        </script>
+
+    @endif
+    
 </html>

@@ -62,7 +62,7 @@
                                 </a>
                                 <form method="POST" action="{{ route('admin.books.delete', ['id'=>$book->id]) }}">
                                     @csrf
-                                    <button class="py-2 px-4 border rounded-lg text-white bg-red-600 mx-auto">
+                                    <button type="submit" class="py-2 px-4 border rounded-lg text-white bg-red-600 mx-auto">
                                         Excluir
                                     </button>
                                 </form>

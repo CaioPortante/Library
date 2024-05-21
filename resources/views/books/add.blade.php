@@ -22,8 +22,7 @@
             </div>
             <div class="mb-5">
                 <label for="description" class="block mb-2 text-sm font-medium text-black/75 ">Descrição</label>
-                <textarea id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                </textarea>
+                <textarea id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
             </div>
             <div class="mb-5">
                 <label for="quantity" class="block mb-2 text-sm font-medium text-black/75 ">Estoque Inicial</label>

@@ -8,21 +8,30 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function showRegister($errors = []) {
+    public function showRegister() {
 
         $userTypes = UserType::all();
 
-        return view('register', compact("userTypes"))->with("errors", $errors);
+        return view('register', compact("userTypes"));
     }
 
     public function createUser(Request $request) {
 
-        $isRequestValid = $request->validate([
-            "name"=>"required",
-            "email"=>"required|email",
-            "password"=>"required",
-            "type"=>"required"
-        ]);
+        $isRequestValid = $request->validate(
+            [
+                "name"=>"required",
+                "email"=>"required|email",
+                "password"=>"required",
+                "type"=>"required"
+            ],
+            [
+                "name.required"=>"Insira o Nome",
+                "email.required"=>"Insira um Email",
+                "email.email"=>"Email Inválido",
+                "password.required"=>"Insira uma Senha",
+                "type.required"=>"Selecione um Tipo"
+            ]
+        );
 
         $isEmailRegistered = User::where('email', $request->email)->count();
 
@@ -37,11 +46,11 @@ class UserController extends Controller
     
             $user->save();
 
-            return redirect("/login")->with("errors", [200, "Cadastro Realizado"]);
+            return redirect("/login")->with("response", [200, "Cadastro Realizado"]);
             
         }
         
-        return $this->showRegister([400, "Ocorreu um erro"]);
+        return redirect("/register")->back()->with("response", [400, "Ocorreu um erro"]);
         
     }
 }

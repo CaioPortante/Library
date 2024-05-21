@@ -53,7 +53,7 @@ class BookController extends Controller
 
         $book->save();
 
-        return $this->showBooksDashboard();
+        return redirect('/admin/books')->with("response", [200, "Livro cadastrado com Sucesso!"]);
     }
 
     public function editBookDashboard($id)
@@ -89,23 +89,34 @@ class BookController extends Controller
 
         $book = Book::find($id);
 
+        
         if(!$book){
-            return redirect()->back()->with("response", [400, "Produto não Encontrado!"]);
+
+            return redirect('/admin/books')->with("response", [404, "Produto não Encontrado!"]);
+
         } else{
+
+            $activeLoans = Loan::with('book')->where('book_id', $id)->where('status', 1)->count();
+
+            if($request->quantity < $activeLoans){
+                return redirect('/admin/books/edit/'.$id)->with("response", [401, "A quantidade de não pode ser menor do que os Aluguéis ativos"]);
+            }
+
             $book->title = (string) $request->title;
             $book->author = (string) $request->author;
             $book->isbn = (string) $request->isbn;
             $book->description = (string) $request->description;
             $book->quantity = (int) $request->quantity;
+
+            $updated = $book->save();
+    
+            if($updated){
+                return redirect('/admin/books')->with("response", [200, "Dados alterados com Sucesso!"]);
+            } 
+
         }
 
-        $updated = $book->save();
-
-        if($updated){
-            return $this->showBooksDashboard();
-        } else{
-            return redirect()->back()->with("response", [400, "Erro ao salvar os Dados!"]);
-        }
+        return redirect('/admin/books/edit/'.$id)->with("response", [400, "Erro ao salvar os Dados!"]);
     
     }
 
@@ -115,12 +126,21 @@ class BookController extends Controller
         $books = Book::all();
 
         foreach ($books as $book) {
-            $activeLoans = Loan::with('book')->where('book', $book->id)->where('status', 1);
 
-            foreach ($activeLoans as $key => $value) {
-                $book->quantity--;
+            $isBookLoanedByUser = Loan::with(['book', 'user'])->where('book_id', $book->id)->where('user_id', session('user_id'))->where('status', 1)->count();
+
+            if($isBookLoanedByUser > 0){
+
+                $book->quantity = 0;
+
+            } else{
+
+                $activeLoans = Loan::with('book')->where('book_id', $book->id)->where('status', 1)->count();
+    
+                $book->quantity = $book->quantity - $activeLoans;
+
             }
-            
+
         }
 
         return view("books.list", compact('books'));

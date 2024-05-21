@@ -11,17 +11,35 @@
 </head>
 <body class="bg-gray-100">
 
-    <div class="min-h-screen flex flex-col">
+    <div class="min-h-screen flex flex-col relative">
         
         @include('partials.header')
         
         <div class="w-100 flex-grow">
             @yield('content')
         </div>
+
+        @include('partials.error')
     
         @include('partials.footer')
 
+        
     </div>
+    
+    @if (!empty(session('response')))
+    
+        <script>
+            
+            const errorDiv = document.getElementById("error");
+            errorDiv.hidden = false;
+
+            setTimeout(() => {
+                errorDiv.hidden = true;
+            }, 3500);
+
+        </script>
+
+    @endif
 
     <script src="./resources/js/app.js"></script>
 

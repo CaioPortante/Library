@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="flex flex-col justify-around w-100">
+        
         <div class="flex justify-between w-100 mx-4 mb-4">
             <div>
                 @if (session('user_type') === 1)
@@ -48,9 +49,5 @@
         </div>
         
     </div>
-
-    @if (!empty(session('status')))
-        {{ session('status')[1] }}
-    @endif
     
 @endsection
