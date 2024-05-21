@@ -28,8 +28,8 @@ Route::prefix("/")->middleware("auth")->group(function () {
 
     Route::get('/books/list', [BookController::class, "showBooksToLoan"])->name("books.list");
     Route::get('/loans/book/{id}', [LoanController::class, "showLoanBook"])->name("loan.book");
-    // Route::get('/books/edit/{id}', [BookController::class, "editBookDashboard"])->name(".books.edit");
-    // Route::post('/books/edit/save/{id}', [BookController::class, "editBookSave"])->name(".books.edit.save");
+    Route::post('/loans/book/{id}', [LoanController::class, "loanBook"])->name("loan.book.save");
+    Route::post('/loans/return/{id}', [LoanController::class, "returnBook"])->name("loan.book.return");
     
 
 });
