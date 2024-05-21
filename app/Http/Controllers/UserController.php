@@ -24,15 +24,22 @@ class UserController extends Controller
             "type"=>"required"
         ]);
 
-        $user = User::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "password"=>$request->password,
-            "type"=>$request->type
-        ]);
-        $user->save();
+        if($isRequestValid){
 
-        return redirect()->intended("/login");
+            $user = User::create([
+                "name"=>$request->name,
+                "email"=>$request->email,
+                "password"=>$request->password,
+                "type"=>$request->type
+            ]);
+    
+            $user->save();
+
+            return redirect()->intended("/login");
+            
+        }
+        
+        return view("register")->with("status", "Dados inválidos");
         
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -9,7 +10,9 @@ class DashboardController extends Controller
 
     public function showDashboard() 
     {
-        return view('dashboard');
+        $loans = Loan::with('book')->where('user', session('user_id'))->where('status', 1)->get();
+
+        return view('dashboard', compact("loans"));
     }
 
     public function showAdminDashboard() 
