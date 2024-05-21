@@ -6,7 +6,12 @@
 @section('content')
     <div class="flex w-100 justify-center">
         <div class="relative overflow-x-auto">
-            <div class="w-100 flex justify-end px-4 mb-4">
+            <div class="w-100 flex justify-between px-4 mb-4">
+                <a href={{ route('dashboard') }}>
+                    <button type="button" class="text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+                        Voltar
+                    </button>
+                </a>
                 <a href="{{ route('admin.books.add') }}">
                     <button class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
                         Adicionar novo Livro

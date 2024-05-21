@@ -19,9 +19,16 @@
                 <div class="flex flex-col gap-6">
                     <span for="time" class="text-center">Por quantos dias deseja alugar esse livro?</span>
                     <input type="number" name="time" class="border-slate-500 border rounded w-20 h-12 mx-auto text-2xl p-2" min="1" value="7">
-                    <button type="submit" class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
-                        Alugar
-                    </button>
+                    <div class="mx-auto">
+                        <a href={{ route('books.list') }} class="mx-auto">
+                            <button type="button" class="py-2 px-4 border rounded-lg text-white bg-gray-400">
+                                Voltar
+                            </button>
+                        </a>
+                        <button type="submit" class="py-2 px-4 border rounded-lg text-white bg-sky-950 mx-auto">
+                            Alugar
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
