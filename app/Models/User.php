@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -43,5 +44,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function UsersType()
+    {
+        return $this->belongsTo(UserType::class, 'type');
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class, 'user_id');
     }
 }
