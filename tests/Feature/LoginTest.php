@@ -3,14 +3,26 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Database\Seeders\TestDatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LoginControllerTest extends TestCase
+class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Rodar seeders para testes
+        $this->seed(TestDatabaseSeeder::class);
+    }
+
     /**
-     * LoginController:showLogin returns the view login
+     * returns the view login
      */
     public function test_if_login_view_is_returned(): void
     {

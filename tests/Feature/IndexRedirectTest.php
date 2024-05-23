@@ -2,13 +2,24 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
+use Database\Seeders\TestDatabaseSeeder;
 use Tests\TestCase;
 
 class IndexRedirectTest extends TestCase
 {
+    use RefreshDatabase;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Rodar seeders para testes
+        $this->seed(TestDatabaseSeeder::class);
+    }
+
     /**
      * Index redirects to login when user is not logged
      */
