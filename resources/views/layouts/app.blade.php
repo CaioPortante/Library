@@ -31,8 +31,6 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <script src="{{ asset('js/searchBooks.js') }}"></script>
-
     @if (!empty(session('response')))
     
         <script src="{{ asset('js/error.js') }}"></script>
