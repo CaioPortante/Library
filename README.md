@@ -1,5 +1,5 @@
 <h1 align='center'>
-    Projeto - Biblioteca Online
+    Biblioteca Online
 </h1>
 
 O projeto consiste em uma Biblioteca Online, para controle de aluguel de Livros
@@ -44,6 +44,11 @@ DB_PORT=3306
 DB_DATABASE=[nome do banco de dados]
 DB_USERNAME=[usuário do banco de dados]
 DB_PASSWORD=[senha do usuário]
+```
+#### Gerar Key de funcionamento
+
+```
+php artisan key:generate
 ```
 #### Gerar banco de dados
 
