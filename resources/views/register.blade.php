@@ -6,6 +6,8 @@
 
         <title>Biblioteca Online</title>
 
+        <link rel="icon" href="{{ asset('img/icon_books.png') }}" type="image/x-icon">
+
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         
     </head>
@@ -69,16 +71,7 @@
 
     @if (!empty(session('response')))
     
-        <script>
-            
-            const errorDiv = document.getElementById("error");
-            errorDiv.hidden = false;
-
-            setTimeout(() => {
-                errorDiv.hidden = true;
-            }, 3500);
-
-        </script>
+        <script src="{{ asset('js/error.js') }}"></script>
 
     @endif
     
