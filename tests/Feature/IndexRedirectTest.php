@@ -3,17 +3,29 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use App\Models\User;
 use Tests\TestCase;
 
 class IndexRedirectTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Index redirects to login when user is not logged
      */
-    public function test_index_returns_a_redirect(): void
+    public function test_index_redirects_to_login_when_not_logged(): void
     {
         $response = $this->get('/');
+        $response->assertRedirect('/login');
+    }
 
-        $response->assertStatus(302);
+    /**
+     * Index redirects to login when user is logged
+     */
+    public function test_index_redirects_to_login_when_logged(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $response = $this->get('/');
+        $response->assertRedirect('/dashboard');
     }
 }
