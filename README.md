@@ -18,6 +18,7 @@ A aplicação deve ser capaz de:
 - Tailwind
 - MariaDB
 - Composer 2.7
+- Node 22.2
   
 ## Funcionamento
 
@@ -31,10 +32,18 @@ git clone https://github.com/CaioPortante/Library.git
 ```
 composer install
 ```
+e
+```
+npm install
+```
 #### Gerar banco de dados
 
 ```
-php artisan migrate || php artisan migrate:fresh
+php artisan migrate
+```
+ou
+```
+php artisan migrate:fresh
 ```
 #### Adicionar linhas iniciais no banco de dados
 
