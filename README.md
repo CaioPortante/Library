@@ -69,3 +69,9 @@ php artisan db:seed
 ```
 php artisan serve
 ```
+
+## Outros
+#### Rodar Tailwind 
+```
+npx tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --watch
+```
