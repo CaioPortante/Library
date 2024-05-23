@@ -48,7 +48,6 @@ class LoanController extends Controller
         $loan = new Loan();
 
         $loan->days = $validatedRequest['time'];
-        $loan->got_at = date("Y-m-d H:i:s");
         $loan->status = 1;
         $loan->user_id = session('user_id');
         $loan->book_id = $id;

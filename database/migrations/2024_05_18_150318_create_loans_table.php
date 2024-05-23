@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->integer("days");
-            $table->datetime("got_at");
             $table->datetime("returned_at")->nullable();
             $table->boolean("status");
             $table->timestamps();

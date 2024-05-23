@@ -16,8 +16,6 @@ class LoginTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Rodar seeders para testes
         $this->seed(TestDatabaseSeeder::class);
     }
 
