@@ -3,12 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Database\Seeders\TestDatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
+    use RefreshDatabase;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(TestDatabaseSeeder::class);
+    }
     /**
      * Dashboard loads dashboard view with the needed data
      */

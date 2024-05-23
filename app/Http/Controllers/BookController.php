@@ -88,7 +88,6 @@ class BookController extends Controller
         );
 
         $book = Book::find($id);
-
         
         if(!$book){
 
