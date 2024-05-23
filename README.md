@@ -41,9 +41,9 @@ npm install
 DB_CONNECTION=mariadb
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=library
-DB_USERNAME=root
-DB_PASSWORD=123
+DB_DATABASE=[nome do banco de dados]
+DB_USERNAME=[usuário do banco de dados]
+DB_PASSWORD=[senha do usuário]
 ```
 #### Gerar banco de dados
 
