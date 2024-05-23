@@ -34,6 +34,7 @@ Route::prefix("/")->middleware("auth")->group(function () {
     Route::get('/dashboard', [DashboardController::class, "showDashboard"])->name("dashboard");
 
     Route::get('/books/list', [BookController::class, "showBooksToLoan"])->name("books.list");
+    Route::post('/books/list/search', [BookController::class, "getBooksToLoan"])->name("books.list.search");
     
     Route::get('/loans/book/{id}', [LoanController::class, "showLoanBook"])->name("loan.book");
     Route::post('/loans/book/{id}', [LoanController::class, "loanBook"])->name("loan.book.save");

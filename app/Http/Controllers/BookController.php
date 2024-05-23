@@ -122,8 +122,18 @@ class BookController extends Controller
 
     public function showBooksToLoan()
     {
+        return view("books.list");
+    }
 
-        $books = Book::all();
+    public function getBooksToLoan(Request $request)
+    {
+        $search = $request->search;
+
+        $books = Book::where(function ($query) use ($search) {
+            return $query->where( 'title', 'like', "%$search%")
+            ->orWhere('description', 'like', "%$search%")
+            ->orWhere('isbn', 'like', "%$search%");
+        })->get();
 
         foreach ($books as $book) {
 
@@ -143,8 +153,7 @@ class BookController extends Controller
 
         }
 
-        return view("books.list", compact('books'));
-
+        return $books;
     }
 
     public function deleteBook($id)

@@ -4,7 +4,10 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>@yield('title', 'Library')</title>
+    <link rel="icon" href="{{ asset('img/icon_books.png') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -25,23 +28,16 @@
 
         
     </div>
-    
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     @if (!empty(session('response')))
     
-        <script>
-            
-            const errorDiv = document.getElementById("error");
-            errorDiv.hidden = false;
-
-            setTimeout(() => {
-                errorDiv.hidden = true;
-            }, 3500);
-
-        </script>
+        <script src="{{ asset('js/error.js') }}"></script>
 
     @endif
-
-    <script src="./resources/js/app.js"></script>
+    
+    @stack('scripts')
 
 </body>
 </html>
