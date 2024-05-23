@@ -32,9 +32,18 @@ git clone https://github.com/CaioPortante/Library.git
 ```
 composer install
 ```
-e
 ```
 npm install
+```
+#### Configuração inicial do ambiente (.env)
+
+```
+DB_CONNECTION=mariadb
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=library
+DB_USERNAME=root
+DB_PASSWORD=123
 ```
 #### Gerar banco de dados
 
